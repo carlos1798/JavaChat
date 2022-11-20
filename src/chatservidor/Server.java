@@ -4,7 +4,6 @@
  */
 package chatservidor;
 
-
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -16,52 +15,46 @@ import java.util.List;
  * @author carlos
  */
 public class Server {
-	
 
-	
-	 private ServerSocket serverSocket;
+	private ServerSocket serverSocket;
 
-	
-	 public Server(ServerSocket serverSocket) {
-		 this.serverSocket = serverSocket;
-	 }
+	public Server(ServerSocket serverSocket) {
+		this.serverSocket = serverSocket;
+	}
 
-	 public void startServer() {
-		 
-		 try {
-		 while(!serverSocket.isClosed()) {
-			
-			Socket socket = serverSocket.accept();
-			System.out.println("Un nuevo usuario se a conectado "+socket);
-			System.out.println("");
-			ControladorCliente controladorCliente = new ControladorCliente(socket);
-			Thread hilo = new Thread(controladorCliente);
-			hilo.start();
+	public void startServer() {
 
-		 }
-		}catch(IOException ex) {
-			 
-		 }
-	 }
+		try {
+			while (!serverSocket.isClosed()) {
 
-	 public void cerrarServerSocket() {
-		 try {
-			 if(serverSocket!=null) {
-				 serverSocket.close();
-			 }
-		 }catch(IOException ex) {
-			 ex.printStackTrace();
-		 }
-		 
-	 }
-	 
-	 
-	 
-	 public static void main(String[] args) throws IOException {
-		 ServerSocket serverSocket = new ServerSocket(10520);
-		 Server server = new Server(serverSocket);
+				Socket socket = serverSocket.accept();
+				System.out.println("Un nuevo usuario se a conectado " + socket);
+				System.out.println("");
+				ControladorCliente controladorCliente = new ControladorCliente(socket);
+				Thread hilo = new Thread(controladorCliente);
+				hilo.start();
 
-		 server.startServer();
-	 }
+			}
+		} catch (IOException ex) {
+
+		}
+	}
+
+	public void cerrarServerSocket() {
+		try {
+			if (serverSocket != null) {
+				serverSocket.close();
+			}
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+
+	}
+
+	public static void main(String[] args) throws IOException {
+		ServerSocket serverSocket = new ServerSocket(10520);
+		Server server = new Server(serverSocket);
+
+		server.startServer();
+	}
 }
-
